@@ -21,11 +21,12 @@ namespace FoodEstablishment.Web
 {
     public class Startup
     {
-        
-        public Startup(IConfiguration configuration)
+        private string _contentRootPath = "";
+
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
-            
+            _contentRootPath = env.ContentRootPath;
         }
 
         public IConfiguration Configuration { get; }
@@ -41,8 +42,10 @@ namespace FoodEstablishment.Web
             });
 
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            
-            
+            if (connection.Contains("%CONTENTROOTPATH%"))
+            {
+                connection = connection.Replace("%CONTENTROOTPATH%", _contentRootPath);
+            }
 
             services.AddDbContext<DataDbContext>(options => options.UseSqlServer(connection));
             services.AddSingleton<IUnitOfWorkFactory, UnitOfWorkFactory>();
