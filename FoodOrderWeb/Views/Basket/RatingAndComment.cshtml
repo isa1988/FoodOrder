@@ -1,0 +1,70 @@
+﻿@model FoodOrderWeb.Models.Basket.BasketRatingAndComment
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Rating And Comment</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="RatingAndComment">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @Html.HiddenFor(model => model.UserId)
+            @Html.HiddenFor(model => model.OrganizationId)
+            @Html.HiddenFor(model => model.Id)
+
+            @for (int i = 0; i < Model.BasketInventoryRatingAndComments.Count; i++)
+            {
+                @Html.HiddenFor(model => model.BasketInventoryRatingAndComments[i].Id)
+                @Html.HiddenFor(model => model.BasketInventoryRatingAndComments[i].DishId)
+                @Html.HiddenFor(model => model.BasketInventoryRatingAndComments[i].CountInventory)
+                @Html.HiddenFor(model => model.BasketInventoryRatingAndComments[i].Price)
+                @Html.HiddenFor(model => model.BasketInventoryRatingAndComments[i].Name)
+                @Html.HiddenFor(model => model.BasketInventoryRatingAndComments[i].PictureFormat)
+                @Html.HiddenFor(model => model.BasketInventoryRatingAndComments[i].PictureName)
+                @Html.HiddenFor(model => model.BasketInventoryRatingAndComments[i].Sum)
+                <div class="row">
+                    <div class="col-12">
+                        <h1>@Model.BasketInventoryRatingAndComments[i].Name</h1>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-4">
+                        <p>цена @Model.BasketInventoryRatingAndComments[i].Price</p>
+                        <p>кол-во @Model.BasketInventoryRatingAndComments[i].CountInventory на сумму @Model.BasketInventoryRatingAndComments[i].Sum</p>
+
+                        @if (Model.BasketInventoryRatingAndComments[i].PictureFormat?.Length > 0)
+                        {
+                            <img src="@Url.Content("/Images/Dish/" +
+                                                   Model.BasketInventoryRatingAndComments[i].PictureName + "." +
+                                                   Model.BasketInventoryRatingAndComments[i].PictureFormat)" class="img-fluid img-thumbnail" />
+                        }
+                    </div>
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label asp-for="@Model.BasketInventoryRatingAndComments[i].Comment" class="control-label"></label>
+                            <input asp-for="@Model.BasketInventoryRatingAndComments[i].Comment" class="form-control" />
+                            <span asp-validation-for="@Model.BasketInventoryRatingAndComments[i].Comment" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.BasketInventoryRatingAndComments[i].Raiting" class="control-label"></label>
+                            <input asp-for="@Model.BasketInventoryRatingAndComments[i].Raiting" class="form-control" />
+                            <span asp-validation-for="@Model.BasketInventoryRatingAndComments[i].Raiting" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
