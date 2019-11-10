@@ -47,9 +47,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Basket" asp-action="Index">Baskets</a>
                             </li>
                         }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Organization" asp-action="IndexAll">Menu</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -62,9 +65,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted text-center">
         <div class="container">
-            &copy; 2019 - FoodOrderWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2019 - FoodOrderWeb - by Ibragimov Isa
         </div>
     </footer>
 

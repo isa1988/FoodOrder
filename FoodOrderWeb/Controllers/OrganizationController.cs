@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FoodOrderWeb.Controllers
 {
-    [Authorize(Roles = "Admin, User")]
     public class OrganizationController : BaseController
     {
         private  readonly IOrganizationService _service;
@@ -54,6 +53,19 @@ namespace FoodOrderWeb.Controllers
         // GET: Organization
         [Authorize(Roles = "User")]
         public async Task<IActionResult> IndexOrg()
+        {
+            using (var unitOfWork = _unitOfWorkFactory.MakeUnitOfWork())
+            {
+                var organizations = unitOfWork.Organization.GetAll();
+                var model = new ListModel
+                {
+                    Organizations = organizations
+                };
+                return View(model);
+            }
+        }
+
+        public async Task<IActionResult> IndexAll()
         {
             using (var unitOfWork = _unitOfWorkFactory.MakeUnitOfWork())
             {

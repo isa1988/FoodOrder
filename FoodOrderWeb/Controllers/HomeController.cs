@@ -12,9 +12,20 @@ namespace FoodOrderWeb.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            if (User.IsInRole("Admin"))
+            {
+                return View("IndexForAdmin");
+            }
+            else if (User.IsInRole("User"))
+            {
+                return View("IndexForUser");
+            }
+            else
+            {
+                return View();
+            }
         }
-
+        
         public IActionResult Privacy()
         {
             return View();

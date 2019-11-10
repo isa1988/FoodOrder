@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FoodOrderWeb.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class DishController : BaseController
     {
         private readonly IDishService _service;
@@ -35,7 +34,34 @@ namespace FoodOrderWeb.Controllers
             _appEnvironment = appEnvironment;
         }
 
+        public async Task<IActionResult> IndexAll(int? organizationId)
+        {
+            using (var unitOfWork = _unitOfWorkFactory.MakeUnitOfWork())
+            {
+                if (!organizationId.HasValue)
+                {
+                    var dishes = unitOfWork.Dish.GetAll();
+                    var model = new ListModel
+                    {
+                        Dishes = dishes
+                    };
+                    return View(model);
+                }
+                else
+                {
+                    var dishes = unitOfWork.Dish.GetAll(organizationId.Value);
+                    var model = new ListModel
+                    {
+                        Dishes = dishes,
+                        OrganizationId = organizationId
+                    };
+                    return View(model);
+                }
+            }
+        }
+
         // GET: Organization
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index(int? organizationId)
         {
             using (var unitOfWork = _unitOfWorkFactory.MakeUnitOfWork())
@@ -63,6 +89,7 @@ namespace FoodOrderWeb.Controllers
         }
 
         // GET: Organization/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create(int? organizationId)
         {
             using (var unitOfWork = _unitOfWorkFactory.MakeUnitOfWork())
@@ -129,6 +156,7 @@ namespace FoodOrderWeb.Controllers
         }
 
         // GET: Organization/Edit/5
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int? id)
         {
             using (var unitOfWork = _unitOfWorkFactory.MakeUnitOfWork())
@@ -192,6 +220,7 @@ namespace FoodOrderWeb.Controllers
         }
 
         // GET: Organization/Delete/5
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int? id)
         {
             using (var unitOfWork = _unitOfWorkFactory.MakeUnitOfWork())
