@@ -213,6 +213,7 @@ UpgradeLog*.htm
 # SQL Server files
 *.mdf
 *.ldf
+FoodOrderWeb/ContentRootPath/
 
 # Business Intelligence projects
 *.rdl.data
