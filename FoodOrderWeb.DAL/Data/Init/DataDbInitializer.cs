@@ -38,8 +38,8 @@ namespace FoodOrderWeb.DAL.Data.Init
                 {
                     var user = new User
                     {
-                        UserName = "support@megasoft.kg",
-                        Email = "support@megasoft.kg",
+                        UserName = "admin@test.ru",
+                        Email = "admin@test.ru",
                         FirstName = "Admin",
                         LastName = "Admin",
                         PatronymicName = "Admin",
