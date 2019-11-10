@@ -8,7 +8,7 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div>
         <form asp-action="CreateOrEdit">
             <div asp-validation-summary="All" class="text-danger"></div>
             @Html.HiddenFor(model => model.UserId)
@@ -35,7 +35,7 @@
                 </div>
                 <div class="row">
 
-                    <div class="col-4">
+                    <div class="col-6">
                         <p>цена @Model.BasketInventoryRatingAndComments[i].Price</p>
 
                         @if (Model.BasketInventoryRatingAndComments[i].PictureFormat?.Length > 0)
@@ -51,7 +51,7 @@
                             <span asp-validation-for="@Model.BasketInventoryRatingAndComments[i].CountInventory" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-6">
                         @if (Model.BasketInventoryRatingAndComments[i].RatingCount > 0)
                         {
                             <h4>рейтинг @Model.BasketInventoryRatingAndComments[i].Raiting</h4>

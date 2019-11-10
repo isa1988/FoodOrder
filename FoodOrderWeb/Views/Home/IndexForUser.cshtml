@@ -3,6 +3,40 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1>Welcome</h1>
+</div>
+
+<div class="text-left">
+    <p>Добро пожаловать на демонстрационное приложение.</p>
+    <p>Вы зашли как User к Вашему вниманию предоставляется такое меню</p>
+    <img src="@Url.Content("/Images/Sys/menuUser.jpg")" />
+    <p>Подробнее о меню</p>
+    <ol>
+        <li>FoodOrderwWeb или Home попадете на текущую страницу;</li>
+        <li>Order страница для того чтобы сделать/отредактировать заказ;</li>
+        <li>Baskets страница для отображения списка покупок</li>
+        <li>Hello, это просто приветствие того под кем Вы вошли</li>
+        <li>Loginout разлогиниться перебросит на страницу Гость</li>
+    </ol>
+    <p class="font-weight-bolder">
+        ВНИМАНИЕ. На одни магазин одна активная корзина. То есть активную корзинку (Basket) можно отредактировать через заказ (Basket).
+    </p>
+    <p>Ниже будет подробнее о Order и Basket</p>
+    <p class="font-weight-bolder">Order</p>
+    <img src="@Url.Content("/Images/Sys/OrgUser.jpg")" />
+    <p>При клике на Order</p>
+    <img src="@Url.Content("/Images/Sys/DishesUserNoRAndC.jpg")" />
+    <p>Если уже есть активная корзинка то будет следующее, тут 1 у меня в данное время у Вас может быть иная цифра.</p>
+    <img src="@Url.Content("/Images/Sys/DishesUserCount.jpg")" />
+    <p>Если уже были заказы по товару, прошла оплата и поставлена оценка и комментарий (о них позже) то Вы увидите следующее</p>
+    <img src="@Url.Content("/Images/Sys/DishesUserRAndC.jpg")" />
+    <p class="font-weight-bolder">Baskets</p>
+    <p>При клике на Baskets</p>
+    <img src="@Url.Content("/Images/Sys/BasketList.jpg")" />
+    <p>Первая операция это Pay за ней RatingAndCommet. При клике на Pay</p>
+    <img src="@Url.Content("/Images/Sys/BasketPay.jpg")" />
+    <p>После оплаты можно оставить свой комментарий и поставить оценку</p>
+    <img src="@Url.Content("/Images/Sys/BasketREmpty.jpg")" />
+    <p>Также можно отредактировать</p>
+    <img src="@Url.Content("/Images/Sys/BasketR.jpg")" />
 </div>
