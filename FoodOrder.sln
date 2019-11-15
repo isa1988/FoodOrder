@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.757
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodOrderWeb.DAL", "FoodOrderWeb.DAL\FoodOrderWeb.DAL.csproj", "{6B6D2459-7DB1-44FB-834B-62E2BB9B7C41}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodOrderWeb.Service", "FoodOrderWeb.Service\FoodOrderWeb.Service.csproj", "{CACA1107-CE50-4897-83A0-9DC6EB2627AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodOrderWeb", "FoodOrderWeb\FoodOrderWeb.csproj", "{FEE1141F-F8A9-492B-B664-6ABD9F001C47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodOrderWeb.Tests", "FoodOrderWeb.Tests\FoodOrderWeb.Tests.csproj", "{DAEC2C34-435A-4B1E-BE64-D089E2289189}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{FEE1141F-F8A9-492B-B664-6ABD9F001C47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEE1141F-F8A9-492B-B664-6ABD9F001C47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEE1141F-F8A9-492B-B664-6ABD9F001C47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAEC2C34-435A-4B1E-BE64-D089E2289189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAEC2C34-435A-4B1E-BE64-D089E2289189}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAEC2C34-435A-4B1E-BE64-D089E2289189}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAEC2C34-435A-4B1E-BE64-D089E2289189}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
