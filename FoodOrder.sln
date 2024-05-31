@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.757
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodOrderWeb.DAL", "FoodOrderWeb.DAL\FoodOrderWeb.DAL.csproj", "{6B6D2459-7DB1-44FB-834B-62E2BB9B7C41}"
 EndProject

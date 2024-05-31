@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FoodOrderWeb.Controllers
 {
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
         protected readonly IUnitOfWorkFactory _unitOfWorkFactory;
 

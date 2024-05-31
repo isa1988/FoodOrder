@@ -10,8 +10,6 @@ namespace FoodOrderWeb.DAL.Data
 {
     public class DataDbContext : IdentityDbContext<User, Role, int>
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<Dish> Dishes { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Basket> Baskets { get; set; }

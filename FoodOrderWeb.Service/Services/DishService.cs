@@ -107,7 +107,7 @@ namespace FoodOrderWeb.Service.Services
             }
         }
 
-        public async Task<EntityOperationResult<Dish>> DeleeteItemAsync(DishDeleteDto deleteDto, string path)
+        public async Task<EntityOperationResult<Dish>> DeleteItemAsync(DishDeleteDto deleteDto, string path)
         {
             using (var unitOfWork = _unitOfWorkFactory.MakeUnitOfWork())
             {

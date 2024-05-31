@@ -11,6 +11,6 @@ namespace FoodOrderWeb.Service.Services.Contracts
     {
         Task<EntityOperationResult<T>> CreateItemAsync(I createDto, string path);
         Task<EntityOperationResult<T>> EditItemAsync(U editDto, string path);
-        Task<EntityOperationResult<T>> DeleeteItemAsync(D deleteDto, string path);
+        Task<EntityOperationResult<T>> DeleteItemAsync(D deleteDto, string path);
     }
 }

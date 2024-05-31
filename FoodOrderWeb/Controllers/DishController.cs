@@ -1,40 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using FoodOrderWeb.DAL.Unit.Contracts;
-using FoodOrderWeb.Service.Dtos.Dish;
-using FoodOrderWeb.Service.Services.Contracts;
+﻿using FoodOrderWeb.DAL.Unit.Contracts;
 using FoodOrderWeb.Models;
 using FoodOrderWeb.Models.Dish;
+using FoodOrderWeb.Service.Dtos.Dish;
+using FoodOrderWeb.Service.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FoodOrderWeb.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class DishController : BaseController
     {
         private readonly IDishService _service;
 
-        private IHostingEnvironment _appEnvironment;
-
-        public DishController(IUnitOfWorkFactory unitOfWorkFactory, IHostingEnvironment appEnvironment,
-            IDishService service) : base(unitOfWorkFactory)
+        public DishController(
+            IUnitOfWorkFactory unitOfWorkFactory,
+            IDishService service) : 
+            base(unitOfWorkFactory)
         {
             if (service == null)
                 throw new ArgumentNullException(nameof(service));
-            if (appEnvironment == null)
-                throw new ArgumentNullException(nameof(appEnvironment));
 
             _service = service;
-            _appEnvironment = appEnvironment;
         }
 
-        public async Task<IActionResult> IndexAll(int? organizationId)
+        [HttpGet("Get/{organizationId}")]
+        public async Task<IActionResult> GetDishes(int? organizationId)
         {
             using (var unitOfWork = _unitOfWorkFactory.MakeUnitOfWork())
             {
@@ -60,62 +52,20 @@ namespace FoodOrderWeb.Controllers
             }
         }
 
-        // GET: Organization
+        [HttpPost("Create")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Index(int? organizationId)
+        public async Task<IActionResult> CreateDish(DishCreatingModel request)
         {
-            using (var unitOfWork = _unitOfWorkFactory.MakeUnitOfWork())
+            var dto = new DishCreateDto()
             {
-                if (!organizationId.HasValue)
-                {
-                    var dishes = unitOfWork.Dish.GetAll();
-                    var model = new ListModel
-                    {
-                        Dishes = dishes
-                    };
-                    return View(model);
-                }
-                else
-                {
-                    var dishes = unitOfWork.Dish.GetAll(organizationId.Value);
-                    var model = new ListModel
-                    {
-                        Dishes = dishes,
-                        OrganizationId = organizationId
-                    };
-                    return View(model);
-                }
-            }
-        }
-
-        // GET: Organization/Create
-        [Authorize(Roles = "Admin")]
-        public IActionResult Create(int? organizationId)
-        {
-            using (var unitOfWork = _unitOfWorkFactory.MakeUnitOfWork())
-            {
-                var model = new DishCreatingModel
-                {
-                    Title = "Создание"
-                };
-                if (!organizationId.HasValue)
-                {
-                    model.OrganizationList = new SelectList(unitOfWork.Organization.GetAll(), "Id", "Name");
-                }
-                else
-                {
-                    model.OrganizationList = new SelectList(unitOfWork.Organization.GetAll(), "Id", "Name", organizationId);
-                }
-                return View(model);
-            }
-        }
-
-        // POST: Organization/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(DishCreatingModel request)
-        {
-            var dto = Mapper.Map<DishCreateDto>(request);
+                Name = request.Name,
+                Price = request.Price,
+                OrganizationId = request.OrganizationId,
+                PictureName = request.PictureName,
+                PictureFormat = request.PictureFormat,
+                File = request.File,
+                Comment = request.Comment,
+            };
 
             // путь к папке Files
             string path = string.Empty;
@@ -131,58 +81,32 @@ namespace FoodOrderWeb.Controllers
 
                 dto.File = imageData;
                 dto.PictureName = request.WorkToFile.FileName;
-                path = _appEnvironment.WebRootPath + "/Images/Dish/";
+                path = ""; //_appEnvironment.WebRootPath + "/Images/Dish/";
             }
 
             var result = await _service.CreateItemAsync(dto, path);
 
-            if (result.IsSuccess)
-            {
-                return RedirectToAction("Index", new { organizationId = request.OrganizationId});
-            }
-            else
-            {
-                using (var unitOfWork = _unitOfWorkFactory.MakeUnitOfWork())
-                {
-                    foreach (var resultError in result.Errors)
-                    {
-                        ModelState.AddModelError("Error", resultError);
-                    }
-
-                    request.OrganizationList = new SelectList(unitOfWork.Organization.GetAll(), "Id", "Name", request.OrganizationId);
-                    return View(request);
-                }
-            }
+            return Ok(result);
         }
 
-        // GET: Organization/Edit/5
+        [HttpPost("Edit")]
         [Authorize(Roles = "Admin")]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> EditDish(DishEditModel request)
         {
-            using (var unitOfWork = _unitOfWorkFactory.MakeUnitOfWork())
+            var dto = new DishEditDto()
             {
-                if (!id.HasValue)
-                {
-                    return NotFound();
-                }
+                Id = request.Id,
+                Name = request.Name,
+                Price = request.Price,
+                OrganizationId = request.OrganizationId,
+                PictureName = request.PictureName,
+                PictureFormat = request.PictureFormat,
+                File = request.File,
+                IsPictureDelete = request.IsPictureDelete,
+                Comment = request.Comment,
+            };
 
-                var organization = unitOfWork.Dish.GetById(id.Value);
-
-                var model = Mapper.Map<DishEditModel>(organization);
-                model.OrganizationList = new SelectList(unitOfWork.Organization.GetAll(), "Id", "Name", model.OrganizationId);
-                return View(model);
-            }
-        }
-
-        // POST: Organization/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(DishEditModel request)
-        {
-            var dto = Mapper.Map<DishEditDto>(request);
-
-            // путь к папке Files
-            string path = _appEnvironment.WebRootPath + "/Images/Dish/";
+            string path = ""; //_appEnvironment.WebRootPath + "/Images/Dish/";
 
             if (request.WorkToFile != null)
             {
@@ -199,69 +123,29 @@ namespace FoodOrderWeb.Controllers
 
             var result = await _service.EditItemAsync(dto, path);
 
-            if (result.IsSuccess)
-            {
-                return RedirectToAction("Index", new { organizationId = request.OrganizationId });
-            }
-            else
-            {
-                using (var unitOfWork = _unitOfWorkFactory.MakeUnitOfWork())
-                {
-                    foreach (var resultError in result.Errors)
-                    {
-                        ModelState.AddModelError("Error", resultError);
-                    }
-
-                    request.OrganizationList = new SelectList(unitOfWork.Organization.GetAll(), "Id", "Name",
-                        request.OrganizationId);
-                    return View(request);
-                }
-            }
+            return Ok(result);
         }
 
-        // GET: Organization/Delete/5
+        [HttpPost("Delete")]
         [Authorize(Roles = "Admin")]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> DeleteDish(DishDeleteModel request)
         {
-            using (var unitOfWork = _unitOfWorkFactory.MakeUnitOfWork())
-            {
-                if (!id.HasValue)
-                {
-                    return NotFound();
-                }
+            var dto = new DishDeleteDto() 
+            { 
+                Id = request.Id,
+                Name = request.Name,
+                Price = request.Price,
+                PictureName = request.PictureName,
+                PictureFormat = request.PictureFormat,
+                Comment = request.Comment,
+            };
 
-                var organization = unitOfWork.Dish.GetById(id.Value);
-
-                var model = Mapper.Map<DishDeleteModel>(organization);
-
-                return View(model);
-            }
-        }
-
-        // POST: Organization/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(DishDeleteModel request)
-        {
-            var dto = Mapper.Map<DishDeleteDto>(request);
             int organizationIdBeforDelete = request.OrganizationId;
             // путь к папке Files
-            string path = _appEnvironment.WebRootPath + "/Images/Dish/";
+            string path = ""; // _appEnvironment.WebRootPath + "/Images/Dish/";
             dto.PictureName = request.PictureName + "." + request.PictureFormat;
-            var result = await _service.DeleeteItemAsync(dto, path);
-
-            if (result.IsSuccess)
-            {
-                return RedirectToAction("Index", new { organizationId = organizationIdBeforDelete });
-            }
-            else
-            {
-                foreach (var resultError in result.Errors)
-                {
-                    ModelState.AddModelError("Error", resultError);
-                }
-                return View(request);
-            }
+            var result = await _service.DeleteItemAsync(dto, path);
+            return Ok(result);
         }
     }
 }
